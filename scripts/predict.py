@@ -1,4 +1,4 @@
-from process import process_data, split_dataframe_by_period, read_data
+from process import process_data, split_dataframe_by_period, read_data, add_nasdaq_return
 from backtest import backtest_top3_with_sharpe
 import os 
 import joblib
@@ -8,6 +8,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from math import sqrt
+import matplotlib.pyplot as plt
 
 def predict():
     # Define the path to the models directory
@@ -147,9 +148,25 @@ def predict():
     print(f"  ROI: {roi:.2f}%")
     print(f"  Sharpe Ratio: {sharpe_ratio:.4f}")
     print(f"  Net Profit: {net_profit:.2f}")
-    print(f"  Final Portfolio Value : {final_portfolio_value:.2f}")
+    print(f"  Final Portfolio Value : {final_portfolio_value:.2f}\n")
+    print(f"  Benchmark ROI (^IXIC) : 28,64%")
+    print(f"\nAction DataFrame(2024):\n {actions_df.head()}")
+    print(f"\nAction DataFrame(2024):\n {actions_df.sort_values(by='profit_percentage', ascending=False).head()}")
 
-    print(f"Action DataFrame(2024):\n {actions_df.sort_values(by='profit_percentage', ascending=False).head()}")
+
+    # Plotting
+    plt.figure(figsize=(14, 7))
+    plt.plot(prediction_df['date'], prediction_df['weekly_return'], label='Return (Weekly)')
+    plt.plot(predictions_df['date'], predictions_df['predicted_return'], label='Predicted Return')
+    plt.xlabel('Date')
+    plt.ylabel('Return')
+    plt.title('Weekly Return vs Predicted Return')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
+
 
     return predictions_df
 

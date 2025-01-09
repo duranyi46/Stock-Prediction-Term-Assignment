@@ -11,8 +11,9 @@ load_dotenv()
 def main():
     # Initialize Spark session
     spark = SparkSession.builder \
-        .appName("Yahoo Finance to PostgreSQL") \
-        .getOrCreate()
+                .appName("Yahoo Finance to PostgreSQL") \
+                .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
+                .getOrCreate()
 
     # Define the stock index and additional tickers
     index_list = ['AAPL', 'NVDA', 'MSFT', 'AVGO', 'META', 'AMZN', 'TSLA', '^GSPC', 'NQ=F', '^IXIC']
