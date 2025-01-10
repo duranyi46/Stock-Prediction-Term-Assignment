@@ -176,7 +176,7 @@ def feature_engineering(df):
 
     # Weekly returns
     df['weekly_return'] = grouped['adj_close'].pct_change()
-    df['next_weekly_return'] = df['weekly_return'].shift(-1)
+    df['next_weekly_return'] = grouped['weekly_return'].shift(-1)
 
     # Weekly lagged features
     lag_features = ['adj_close', 'volume', 'weekly_return']

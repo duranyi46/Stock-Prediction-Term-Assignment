@@ -12,6 +12,7 @@ def main():
     # Initialize Spark session
     spark = SparkSession.builder \
         .appName("Yahoo Finance to PostgreSQL") \
+        .config("spark.driver.extraJavaOptions", "-Djava.security.manager=allow") \
         .getOrCreate()
 
     # Define the stock index and additional tickers
