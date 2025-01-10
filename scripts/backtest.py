@@ -25,7 +25,7 @@ def backtest_top3_with_sharpe(
             if len(current_day_data) == 0 or stock not in top_3_stocks:
                 continue
 
-            current_price = current_day_data.iloc[0]['adj_close']
+            current_price = current_day_data.iloc[0]['open']
             next_day_data = stock_data[stock_data['date'] > date].iloc[:1]
             if next_day_data.empty:
                 continue
